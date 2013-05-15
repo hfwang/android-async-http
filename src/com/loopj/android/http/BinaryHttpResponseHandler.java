@@ -102,9 +102,9 @@ public class BinaryHttpResponseHandler extends AsyncHttpResponseHandler {
      * Fired when a request fails to complete, override to handle in your own code
      * @param error the underlying cause of the failure
      * @param binaryData the response body, if any
-     * @deprecated
      */
-    @Deprecated
+    // This is undeprecated, because it makes life really hard to otherwise.
+    @SuppressWarnings("deprecation")
     public void onFailure(Throwable error, byte[] binaryData) {
         // By default, call the deprecated onFailure(Throwable) for compatibility
         onFailure(error);
@@ -143,11 +143,11 @@ public class BinaryHttpResponseHandler extends AsyncHttpResponseHandler {
         switch(msg.what) {
             case SUCCESS_MESSAGE:
                 response = (Object[])msg.obj;
-                handleSuccessMessage(((Integer) response[0]).intValue() , (byte[]) response[1]);
+                handleSuccessMessage(((Integer) response[0]).intValue(), (byte[]) response[1]);
                 break;
             case FAILURE_MESSAGE:
                 response = (Object[])msg.obj;
-                handleFailureMessage((Throwable)response[0], response[1].toString());
+                handleFailureMessage((Throwable)response[0], (byte[]) response[1]);
                 break;
             default:
                 super.handleMessage(msg);
